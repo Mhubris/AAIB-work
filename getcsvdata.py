@@ -1,10 +1,11 @@
 import csv
 from numpy import *
 from pylab import *
+import matplotlib as plt
 import novainstrumentation as ni
 
 # open csv file
-with open('myfile.csv') as csvfile:
+with open('datafiles\\myfile.csv') as csvfile:
     # get comma separated values from file
     data = list(csv.reader(csvfile, delimiter=';'))
 
@@ -24,3 +25,5 @@ z = [float(i[3].replace(',','.')) for i in data]
 plot(t, x)
 plot(t, y)
 plot(t, z)
+
+plt.pyplot.show()
