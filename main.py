@@ -1,21 +1,13 @@
-#!/usr/bin/env python
-
 import socket
+import sys
 
-
-TCP_IP = '127.0.0.1'
-TCP_PORT = 5005
-BUFFER_SIZE = 20  # Normally 1024, but we want fast response
-
+HOST = '192.168.0.74' # Enter IP or Hostname of your server
+PORT = 5005 # Pick an open Port (1000+ recommended), must match the server port
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((TCP_IP, TCP_PORT))
-s.listen(1)
+s.connect((HOST,PORT))
 
-conn, addr = s.accept()
-print ('Connection address:', addr)
-while 1:
-    data = conn.recv(BUFFER_SIZE)
-    if not data: break
-    print ("received data:", data)
-    conn.send(data)  # echo
-conn.close()
+#Lets loop awaiting for your input
+while True:
+	command = input('Enter your command: ')
+	s.send(command.encode())
+	reply = s.recv(1024)
