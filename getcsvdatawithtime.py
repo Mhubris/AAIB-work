@@ -117,6 +117,11 @@ axZ.text(0.05, 0.95, textstr, transform=axZ.transAxes, fontsize=14,
 
 '''
 
+# Filter signal to improve visualization and remove noise
+
+# Classify signals with decision tree algorithm
+
+
 # needs .show() to plot as image in pycharm
 #plt.pyplot.show()
 plt.show()
