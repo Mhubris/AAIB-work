@@ -11,7 +11,7 @@ import novainstrumentation as ni
 import sklearn
 
 # open csv file
-with open('datafiles\\I001_esq.csv') as csvfile:
+with open('datafiles\\si002.csv') as csvfile:
     # get comma separated values from file
     data = list(csv.reader(csvfile, delimiter=';'))
 
@@ -74,7 +74,11 @@ for i in range(len(x)-1):
         countCrossXZ += 1
 
 sumX = sum(x)
-period = 10000/len(t)
+totalTime = t[-1]-t[0]
+period = totalTime/len(t)
+print("total time = " + str(totalTime))
+print("number of samples = " + str(len(t)))
+print("period = " + str(period))
 integralX = sumX*period
 
 textstr = '\n'.join((
@@ -105,14 +109,23 @@ axX1.text(0.05, 0.95, textstr, transform=axX1.transAxes, fontsize=14,
 
 
 # Filter signal to improve visualization and remove noise
+
+"""
 uniformTime = []
-for i in range(200):
+for i in range(len(t)):
     uniformTime.append(i*period)
+"""
+
+uniformTime = np.linspace(t[0], t[-1], len(t))
+
 newX = spline(t,x, uniformTime)
+newY = spline(t,y, uniformTime)
+newZ = spline(t,z, uniformTime)
 figure()
-plot(newX)
-
-
+step = 1 # to decrease aquisition rate if needed
+plot(uniformTime[::step], newX[::step], 'r.-')
+plot(uniformTime[::step], newY[::step], 'g.-')
+plot(uniformTime[::step], newZ[::step], 'b.-')
 
 
 # Classify signals with decision tree algorithm
