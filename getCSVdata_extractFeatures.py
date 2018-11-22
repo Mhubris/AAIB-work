@@ -11,7 +11,6 @@ import novainstrumentation as ni
 import sklearn
 
 
-
 # -------------------------------------
 
 def get_line(file_name):
@@ -38,10 +37,10 @@ def get_line(file_name):
 
 # -------------------------------------
 
-csvFileName = "BI001.csv"
+csvFileName = "ms002.csv"
 
 # open csv file
-with open('database_final\\' + csvFileName) as csvfile:
+with open('database_001\\' + csvFileName) as csvfile:
     # get comma separated values from file
     data = list(csv.reader(csvfile, delimiter=';'))
 
@@ -145,6 +144,7 @@ uniformTime = []
 for i in range(len(t)):
     uniformTime.append(i*period)
 """
+
 
 uniformTime = np.linspace(t[0], t[-1], len(t))
 

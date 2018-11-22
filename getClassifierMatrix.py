@@ -19,25 +19,11 @@ print(featuresmatrix)
 # create or overwrite file to store the database (.tab file)
 f = open("database.tab", "w")
 # the first line is the header (features and target class)
-firstline = '\t'.join((
-    r'muX',
-    r'medianX',
-    r'sigmaX',
-    r'kurtosisX',
-    r'skewX',
-    r'corrXY1',
-    r'corrXZ1',
-    r'countCrossXZ',
-    r'vppX',
-    r'maxX',
-    r'minX',
-    r'len(t)',
-    r'integralX',
-    r'sumX',
-    r'goalClass' + '\n'
-    ))
-f.write(firstline)
+
+# change according to getLinesFromCSV.py
+f.write(info.get_first_line())
 # each line corresponds to relevant information of one particular .csv file
 for line in featuresmatrix:
     f.write(line)
 f.close()
+
