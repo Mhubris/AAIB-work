@@ -7,7 +7,7 @@ import novainstrumentation as ni
 import sklearn
 
 # open csv file
-with open('datafiles\\I001_esq.csv') as csvfile:
+with open('database_001\\I001_esq.csv') as csvfile:
     # get comma separated values from file
     data = list(csv.reader(csvfile, delimiter=';'))
 
