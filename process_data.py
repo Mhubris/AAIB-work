@@ -2,13 +2,13 @@ from scipy.stats import kurtosis
 from scipy.stats import skew
 from scipy.stats import pearsonr
 from scipy.interpolate import spline
-from scipy import signal
 from pylab import *
 import numpy as np
 import matplotlib.pyplot as plt
 import novainstrumentation as ni
 
-import classify1Example
+import classify_example_randomforest_orange as classify_sample
+
 
 # -------------------------------------
 
@@ -46,37 +46,39 @@ for i in range(len(tt) - 1):
         z.append(zz[i])
 
 # plot accelerations in X, Y and Z
-plt.figure('test')
-step = 1  # to decrease aquisition rate if needed
-plot(t[::step], x[::step], 'r.-')
-plot(t[::step], y[::step], 'g.-')
-plot(t[::step], z[::step], 'b.-')
-legend(['x', 'y', 'z'])  # to label the plotted lines
+plt.figure('Signal (time domain)')
+step = 1  # to decrease acquisition rate if needed
+plot(t[::step], x[::step], 'm.-')
+plot(t[::step], y[::step], 'y.-')
+plot(t[::step], z[::step], 'c.-')
+# legend(['x', 'y', 'z'])  # to label the plotted lines
 
 
-# signal with constant time
-plt.figure('uniform time')
+# signal with constant time intervals
+#plt.figure('uniform time')
 uniformTime = np.linspace(t[0], t[-1], len(t))
 newX = spline(t, x, uniformTime)
 newY = spline(t, y, uniformTime)
 newZ = spline(t, z, uniformTime)
-step = 1 # to decrease aquisition rate if needed
+step = 1  # to decrease acquisition rate if needed
 plot(uniformTime[::step], newX[::step], 'r.-')
 plot(uniformTime[::step], newY[::step], 'g.-')
 plot(uniformTime[::step], newZ[::step], 'b.-')
-
+# legend(['x', 'y', 'z'])  # to label the plotted lines
 
 t = uniformTime
 # plot smooth accelerations in X, Y and Z
-plt.figure('smooth')
+#plt.figure('smooth')
 x = array(ni.smooth(newX, window_len=5))
-y = array(ni.smooth(newY))
-z = array(ni.smooth(newZ))
-step = 1  # to decrease aquisition rate if needed
-plot(t[::step], x[::step], 'r.-')
-plot(t[::step], y[::step], 'g.-')
-plot(t[::step], z[::step], 'b.-')
-legend(['x', 'y', 'z'])  # to label the plotted lines
+y = array(ni.smooth(newY, window_len=5))
+z = array(ni.smooth(newZ, window_len=5))
+step = 1  # to decrease acquisition rate if needed
+plot(t[::step], x[::step], 'r|-')
+plot(t[::step], y[::step], 'g|-')
+plot(t[::step], z[::step], 'b|-')
+
+legend(['x', 'y', 'z', 'x uniform time', 'y uniform time', 'z uniform time', 'smooth x', 'smooth y', 'smooth z'])  # to label the plotted lines
+
 
 # extract features
 total_time = t[-1] - t[0]
@@ -168,33 +170,38 @@ z_max_freq = y_freqs.max()
 z_peak_freq = y_freqs[x_peak_freq_index]  # not in Hertz
 
 
-# spectrograms -----------------------------
+# spectrogram -----------------------------
 
-fs = (t[-1]/len(t))
+fs = len(t)/t[-1]
+nfft = 8
+noverlap = 4
 
-figure('x spect')
-fx, tx, Sxx = signal.spectrogram(x, fs)
-plt.pcolormesh(tx, fx, Sxx)
-plt.ylabel('Frequency [Hz]')
-plt.xlabel('Time [sec]')
+fig2, (axX2, axY2, axZ2) = plt.subplots(1, 3)
 
-figure('y spect')
-fy, ty, Syy = signal.spectrogram(y, fs)
-plt.pcolormesh(ty, fy, Syy)
-plt.ylabel('Frequency [Hz]')
-plt.xlabel('Time [sec]')
+# figure('x spect')
+Pxx_x, freqs_x, bins_x, im_x = axX2.specgram(x, NFFT=nfft, Fs=fs, noverlap=noverlap)
+axX2.set_ylabel('X Frequency [Hz]')
+axX2.set_xlabel('Time [sec]')
 
-figure('z spect')
-fz, tz, Szz = signal.spectrogram(z, fs)
-plt.pcolormesh(tz, fz, Szz)
-plt.ylabel('Frequency [Hz]')
-plt.xlabel('Time [sec]')
+# figure('y spect')
+Pxx_y, freqs_y, bins_y, im_y = axY2.specgram(y, NFFT=nfft, Fs=fs, noverlap=noverlap)
+axY2.set_ylabel('X Frequency [Hz]')
+axY2.set_xlabel('Time [sec]')
+
+# figure('z spect')
+Pxx_z, freqs_z, bins_z, im_z = axZ2.specgram(z, NFFT=nfft, Fs=fs, noverlap=noverlap)
+axZ2.set_ylabel('X Frequency [Hz]')
+axZ2.set_xlabel('Time [sec]')
 
 
 # histograms --------------------------------
+'''
 figX, (axX1) = plt.subplots()
 figY, (axY1) = plt.subplots()
 figZ, (axZ1) = plt.subplots()
+'''
+
+fig1, (axX1, axY1, axZ1) = plt.subplots(1, 3)
 
 # number of classes for histograms
 class_n_for_hist = int(1 + 3.32 * log(len(t)))
@@ -272,7 +279,7 @@ axZ1.text(0.05, 0.95, textstr_z, transform=axZ1.transAxes, fontsize=14, vertical
 
 
 # show everything
-# plt.show()
+plt.show()
 
 str_features = '\t'.join((
     r'%.2f' % (corr_xy1,),
@@ -331,13 +338,11 @@ str_features = '\t'.join((
 
 # classify example
 
-clf = classify1Example.get_fit()
+clf = classify_sample.get_fit()
 
-est_y = classify1Example.classify_ex(clf, str_features)
+est_y = classify_sample.classify_ex(clf, str_features)
 
 print(est_y)
-
-
 
 
 # -------------------------------------

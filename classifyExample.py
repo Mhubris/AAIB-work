@@ -69,7 +69,7 @@ clf6.fit(X, Y)
 clf7.fit(X, Y)
 
 x = []
-new_example = 'je3.csv'
+new_example = 'be1.csv'
 x.append(newdata.get_line(new_example)[0:-3].split('\t'))
 print(x)
 print(new_example)
