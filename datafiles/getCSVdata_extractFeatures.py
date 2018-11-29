@@ -40,7 +40,7 @@ def get_line(file_name):
 csvFileName = "ms002.csv"
 
 # open csv file
-with open('database_002\\' + csvFileName) as csvfile:
+with open('..\\database_002\\' + csvFileName) as csvfile:
     # get comma separated values from file
     data = list(csv.reader(csvfile, delimiter=';'))
 

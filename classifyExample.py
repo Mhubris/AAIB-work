@@ -47,27 +47,60 @@ for feature in Xtab:
     X.append(feature.split('\t'))           # features from each sample
 
 
-print(Xtab)
-print(X)
-print(Y)
+#print(Xtab)
+#print(X)
+#print(Y)
 
 
-clf = DecisionTreeClassifier()
-#clf = KNeighborsClassifier()
-#clf = SVC()
+clf1 = DecisionTreeClassifier()
+clf2 = KNeighborsClassifier()
+clf3 = SVC(kernel="linear", C=0.025)
+clf4 = SVC(gamma=2, C=1)
+clf5 = RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1)
+clf6 = AdaBoostClassifier()
+clf7 = RandomForestClassifier()
 
-clf.fit(X, Y)
+clf1.fit(X, Y)
+clf2.fit(X, Y)
+clf3.fit(X, Y)
+clf4.fit(X, Y)
+clf5.fit(X, Y)
+clf6.fit(X, Y)
+clf7.fit(X, Y)
+
 x = []
-x.append(newdata.get_line('ms2.csv')[0:-3].split('\t'))
+new_example = 'je3.csv'
+x.append(newdata.get_line(new_example)[0:-3].split('\t'))
 print(x)
+print(new_example)
 
-result = clf.predict(x)
-print(result)
-prob = clf.predict_proba(x)
-print(prob)
+print(clf1.classes_)
 
+print("Decision Tree:")
+print(clf1.predict(x))
+print(clf1.predict_proba(x))
 
+print("K-Nearest Neighbor:")
+print(clf2.predict(x))
+print(clf2.predict_proba(x))
 
+print("Support Vector with linear kernel and C = 0.025:")
+print(clf3.predict(x))
+
+print("Support Vector with gamma = 2 and C = 0.025:")
+print(clf4.predict(x))
+
+print("Random Forest with max_depth = 5, n_estimators = 10, max_features = 1")
+print(clf5.predict(x))
+print(clf5.predict_proba(x))
+
+print("AdaBoost")
+print(clf6.predict(x))
+print(clf6.predict_proba(x))
+
+print("Random Forest (default)")
+print(clf7.predict(x))
+print(clf7.predict_proba(x))
 
 
 
