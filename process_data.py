@@ -46,7 +46,7 @@ for i in range(len(tt) - 1):
         z.append(zz[i])
 
 # plot accelerations in X, Y and Z
-plt.figure('Signal (time domain)')
+plt.figure('Signal (time domain)')  # -------------------------------------------------- figure('Signal (time domain)')
 step = 1  # to decrease acquisition rate if needed
 plot(t[::step], x[::step], 'm.-')
 plot(t[::step], y[::step], 'y.-')
@@ -176,7 +176,7 @@ fs = len(t)/t[-1]
 nfft = 8
 noverlap = 4
 
-fig2, (axX2, axY2, axZ2) = plt.subplots(1, 3)
+fig2, (axX2, axY2, axZ2) = plt.subplots(1, 3)  # ------------------------------------------------------- fig2
 
 # figure('x spect')
 Pxx_x, freqs_x, bins_x, im_x = axX2.specgram(x, NFFT=nfft, Fs=fs, noverlap=noverlap)
@@ -201,7 +201,7 @@ figY, (axY1) = plt.subplots()
 figZ, (axZ1) = plt.subplots()
 '''
 
-fig1, (axX1, axY1, axZ1) = plt.subplots(1, 3)
+fig1, (axX1, axY1, axZ1) = plt.subplots(1, 3)  # ------------------------------------------------------- fig1
 
 # number of classes for histograms
 class_n_for_hist = int(1 + 3.32 * log(len(t)))
