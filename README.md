@@ -1,5 +1,5 @@
 # Trabalho de AAIB
-* Autores:
+###Autores:
 + Bernardo Teixeira
 + Miguel Andrade
 + Sara Lobo
