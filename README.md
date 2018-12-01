@@ -33,5 +33,6 @@ De forma a garantir o bom funcionamento do classificador sugere-se a impressão 
 ![alt text](https://github.com/Mhubris/AAIB-work/blob/master/images_ex/cadeira.JPG "")
 
 ### QR codes para teste
-![alt text](https://github.com/Mhubris/AAIB-work/blob/master/images_ex/bernardo.png "Miguel")
-
+![alt text](https://github.com/Mhubris/AAIB-work/blob/master/images_ex/bernardo.png "Bernardo")
+![alt text](https://github.com/Mhubris/AAIB-work/blob/master/images_ex/miguel.png "Miguel")
+![alt text](https://github.com/Mhubris/AAIB-work/blob/master/images_ex/sara.png "Sara")
