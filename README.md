@@ -22,6 +22,12 @@ A aplicação foi desenvolvida em Cordova e a sua pasta é 'Mobile'. De forma a 
 #### Configuração 
 Visto que a comunicação entre o telefone e o RPI é feita através de uma socket, na tabela seguintes encontram-se as especificações da mesma:
 
-|IP do Rpi| 192.168.0.74|
+|IP | 192.168.0.74|
 | ------- | ----------- |
 |Porta    | 5005        |
+
+#### Classifcação
+
+### Suporte para a cadeira
+De forma a garantir o bom funcionamento do classificador sugere-se a impressão do ficheiro .STL que se encontra no repositório. Este deve ser colocado da seguinte forma:
+
