@@ -30,5 +30,9 @@ Visto que a comunicação entre o telefone e o RPI é feita através de uma sock
 
 ### Suporte para a cadeira
 De forma a garantir o bom funcionamento do classificador sugere-se a impressão do ficheiro .STL que se encontra no repositório. Este deve ser colocado da seguinte forma:
-![alt text](https://github.com/Mhubris/AAIB-work/blob/master/cadeira.JPG "")
+![alt text](https://github.com/Mhubris/AAIB-work/blob/master/images_ex/cadeira.JPG "")
 
+### QR codes para teste
+![alt text](https://github.com/Mhubris/AAIB-work/blob/master/images_ex/bernardo.png "Bernardo")
+![alt text](https://github.com/Mhubris/AAIB-work/blob/master/images_ex/miguel.png "Miguel")
+![alt text](https://github.com/Mhubris/AAIB-work/blob/master/images_ex/sara.png "Sara")
