@@ -14,5 +14,6 @@ Este trabalho consiste na implementação de um classificador cuja a finalidade 
 6. Andou para trás
 7. Telemóvel não colocado no suporte
 
-## Instalação da aplicação
-A aplicação foi desenvolvida para em cordova e a sua pasta é 'Mobile'
+### Instalação da aplicação
+A aplicação foi desenvolvida em Cordova e a sua pasta é 'Mobile'. De forma a instalar a mesma no seu telemóvel deve instalar o Node.js e de seguida o Cordova, através do comando:
+`npm install -g cordova`
