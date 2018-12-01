@@ -21,5 +21,6 @@ A aplicação foi desenvolvida em Cordova e a sua pasta é 'Mobile'. De forma a 
 ### Código do servidor RPI
 #### Configuração 
 Visto que a comunicação entre o telefone e o RPI é feita através de uma socket, na tabela seguintes encontram-se as especificações da mesma:
+
 |IP do Rpi| 192.168.0.74|
 |Porta    | 5005        |
