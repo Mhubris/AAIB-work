@@ -14,4 +14,5 @@ Este trabalho consiste na implementação de um classificador cuja a finalidade 
 6. Andou para trás
 7. Telemóvel não colocado no suporte
 
-# Instalação da aplicação
+## Instalação da aplicação
+A aplicação foi desenvolvida para em cordova e a sua pasta é 'Mobile'
