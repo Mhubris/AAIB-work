@@ -16,4 +16,4 @@ Este trabalho consiste na implementação de um classificador cuja a finalidade 
 
 ### Instalação da aplicação
 A aplicação foi desenvolvida em Cordova e a sua pasta é 'Mobile'. De forma a instalar a mesma no seu telemóvel deve instalar o Node.js e de seguida o Cordova, através do comando:
-`npm install -g cordova`
+`npm install -g cordova` De seguida basta, através da consola, ir até à pasta 'Mobile' e correr o comando `cordova run android`, caso o seu dispositivo seja android. De outra forma, consulte a [documentação](https://cordova.apache.org/docs/en/latest/guide/cli/index.html#add-platforms) para adicionar mais plataformas e inicializar a aplicação.
