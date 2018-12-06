@@ -21,21 +21,8 @@ uniformTime, newX, newY, newZ = my_pd.uniform_time(t, x, y, z)
 t = uniformTime
 x, y, z = my_pd.smooth_signal(newX, newY, newZ)
 
-fig0, (ax0) = plt.subplots()  # ------------------------------------------------------- fig0
-
-plot(uniformTime, newX, 'r.-')
-plot(uniformTime, newY, 'g.-')
-plot(uniformTime, newZ, 'b.-')
-
-plot(t, x, 'm|-')
-plot(t, y, 'y|-')
-plot(t, z, 'c|-')
-
-# to label the plotted lines
-legend(['x uniform time', 'y uniform time', 'z uniform time', 'smooth x', 'smooth y', 'smooth z'])
-
-fig0.set_size_inches(length_inches, width_inches)
-savefig("plot_signals.png")  # -----------------------------------------------------------------------------------
+# plot signal (x, y, z) and smooth signal (newX, newY, newZ) in uniform time
+my_pd.get_signal_figure(t, x, y, z, newX, newY, newZ, save_fig=True, file_name="plot_signals")
 
 # x, y and z spectrogram -----------------------------------------------------------------------------------------------
 my_pd.get_spectrograms_figure(t, x, y, z, save_fig=True, file_name='spectrograms.jpg')
@@ -60,6 +47,3 @@ print(class_number)
 5 - T - Andou para trás
 6 - X - O telemóvel não está colocado no suporte
 '''
-
-
-

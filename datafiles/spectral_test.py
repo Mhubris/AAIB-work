@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from pylab import savefig
 import numpy as np
-from numpy import abs, linspace
+from numpy import abs, linspace, argmax, argsort
 import process_data_AAIB2018 as my_pd
 import novainstrumentation as ni
 
@@ -22,8 +22,35 @@ print("x fundamental freq: ")
 fs = abs(np.fft.fft(x))
 f = linspace(0, Fs/2, len(x)/2)
 fig, ax = plt.subplots(1, 1)
-print(f)
-print(fs)
+max_f = f[argmax(fs)]
+print(max_f)
+if max_f == 0:
+    order_coef = argsort(fs)
+    max_f = f[order_coef[1]]
+    print(max_f)
+
+
+print("y fundamental freq: ")
+fs = abs(np.fft.fft(y))
+f = linspace(0, Fs/2, len(x)/2)
+fig, ax = plt.subplots(1, 1)
+max_f = f[argmax(fs)]
+print(max_f)
+if max_f == 0:
+    order_coef = argsort(fs)
+    max_f = f[order_coef[1]]
+    print(max_f)
+
+print("z fundamental freq: ")
+fs = abs(np.fft.fft(z))
+f = linspace(0, Fs/2, len(x)/2)
+fig, ax = plt.subplots(1, 1)
+max_f = f[argmax(fs)]
+print(max_f)
+if max_f == 0:
+    order_coef = argsort(fs)
+    max_f = f[order_coef[1]]
+    print(max_f)
 
 
 '''

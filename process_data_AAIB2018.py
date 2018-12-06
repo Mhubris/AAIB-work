@@ -1,6 +1,7 @@
-import csv
 import matplotlib
 #matplotlib.use('Agg')
+import csv
+import re
 from scipy.stats import kurtosis
 from scipy.stats import skew
 from scipy.stats import pearsonr
@@ -272,7 +273,8 @@ def addslashes(string, sub=re.compile(r"[\\\"']").sub):
 def get_spectrograms_figure(t, x, y, z,
                             length_inches=18.0, width_inches=5.0,
                             nfft=8, noverlap=4,
-                            save_fig=True, file_name='spect.jpg', rpi=False):
+                            save_fig=True, file_name='spect.jpg',
+                            rpi=False, rpi_filepath='//home/pi//Desktop//AAIB_Project//'):
     """ Returns image in base64 (for Raspberry Pi), if and only if save_fig=True, or figure if rpi=False """
     # t is in milliseconds
     fs = (len(t) / t[-1]) * pow(10, 3) # sampling frequency in Hertz
@@ -299,15 +301,18 @@ def get_spectrograms_figure(t, x, y, z,
     if save_fig:
         savefig(file_name)
         if rpi:
-            with open("//home/pi//Desktop//AAIB_Project//spect.jpg", "rb") as imageFile:
-                return addslashes(imageFile.read())
+            with open(rpi_filepath+file_name, "rb") as imageFile:
+                aux = addslashes(imageFile.read())
+                os.remove(rpi_filepath + file_name)
+                return aux
 
     return fig2
 
 
 def get_histograms_figure(t, x, y, z,
                           length_inches=18.0, width_inches=5.0,
-                          save_fig=True, file_name='histograms.jpg', rpi=False):
+                          save_fig=True, file_name='histograms.jpg',
+                          rpi=False, rpi_filepath='//home/pi//Desktop//AAIB_Project//'):
     """ Returns image in base64 (for Raspberry Pi), if and only if save_fig=True, or figure if rpi=False """
 
     fig1, (axX1, axY1, axZ1) = plt.subplots(1, 3)  # ------------------------------------------------------- fig1
@@ -362,10 +367,43 @@ def get_histograms_figure(t, x, y, z,
     if save_fig:
         savefig(file_name)
         if rpi:
-            with open("//home/pi//Desktop//AAIB_Project//spect.jpg", "rb") as imageFile:
-                return addslashes(imageFile.read())
+            with open(rpi_filepath + file_name, "rb") as imageFile:
+                aux = addslashes(imageFile.read())
+                os.remove(rpi_filepath + file_name)
+                return aux
 
     return fig1
 
 
+def get_signal_figure(t, x, y, z, newX, newY, newZ,
+                            length_inches=18.0, width_inches=5.0,
+                            nfft=8, noverlap=4,
+                            save_fig=True, file_name='signal.jpg',
+                            rpi=False, rpi_filepath='//home/pi//Desktop//AAIB_Project//'):
+    """ Returns image in base64 (for Raspberry Pi), if and only if save_fig=True, or figure if rpi=False """
+    # t is in milliseconds
+    fig0, (ax0) = plt.subplots()  # ------------------------------------------------------- fig0
 
+    plot(t, newX, 'r.-')
+    plot(t, newY, 'g.-')
+    plot(t, newZ, 'b.-')
+
+    plot(t, x, 'm|-')
+    plot(t, y, 'y|-')
+    plot(t, z, 'c|-')
+
+    # to label the plotted lines
+    legend(['x uniform time', 'y uniform time', 'z uniform time', 'smooth x', 'smooth y', 'smooth z'])
+
+    fig0.set_size_inches(length_inches, width_inches)
+    savefig("plot_signals.png")  # -----------------------------------------------------------------------------------
+
+    if save_fig:
+        savefig(file_name)
+        if rpi:
+            with open(rpi_filepath+file_name, "rb") as imageFile:
+                aux = addslashes(imageFile.read())
+                os.remove(rpi_filepath + file_name)
+                return aux
+
+    return fig0
