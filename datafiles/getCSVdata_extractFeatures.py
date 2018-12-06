@@ -1,12 +1,12 @@
 import csv
 import numpy as np
-import matplotlib.pyplot as plt
 from pylab import *
 from scipy import *
 from scipy.stats import kurtosis
 from scipy.stats import skew
 from scipy.stats import pearsonr
 from scipy.interpolate import spline
+from io import BytesIO
 import novainstrumentation as ni
 import sklearn
 
@@ -76,6 +76,9 @@ plot(t[::step], x[::step], 'r.-')
 plot(t[::step], y[::step], 'g.-')
 plot(t[::step], z[::step], 'b.-')
 legend(['x','y','z']) # to label the plotted lines
+buf = BytesIO()
+plt.savefig(buf, format="png")
+data = base64.b64encode(buf.getbuffer())
 
 
 # number of classes for histograms
