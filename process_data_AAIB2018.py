@@ -396,7 +396,6 @@ def get_signal_figure(t, x, y, z, newX, newY, newZ,
     legend(['x uniform time', 'y uniform time', 'z uniform time', 'smooth x', 'smooth y', 'smooth z'])
 
     fig0.set_size_inches(length_inches, width_inches)
-    savefig("plot_signals.png")  # -----------------------------------------------------------------------------------
 
     if save_fig:
         savefig(file_name)

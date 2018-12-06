@@ -12,7 +12,7 @@ length_inches = 18.0
 width_inches = 5.0
 # -------------------------------------
 
-tt, xx, yy, zz = my_pd.get_values_from_csv('be1.csv')
+tt, xx, yy, zz = my_pd.get_values_from_csv('pn1.csv')
 
 t, x, y, z = my_pd.remove_duplicates(tt, xx, yy, zz)
 
@@ -21,8 +21,7 @@ uniformTime, newX, newY, newZ = my_pd.uniform_time(t, x, y, z)
 t = uniformTime
 x, y, z = my_pd.smooth_signal(newX, newY, newZ)
 
-# plot signal (x, y, z) and smooth signal (newX, newY, newZ) in uniform time
-my_pd.get_signal_figure(t, x, y, z, newX, newY, newZ, save_fig=True, file_name="plot_signals")
+my_pd.get_signal_figure(t, x, y, z, newX, newY, newZ, save_fig=True, file_name="plot_signals.jpg")
 
 # x, y and z spectrogram -----------------------------------------------------------------------------------------------
 my_pd.get_spectrograms_figure(t, x, y, z, save_fig=True, file_name='spectrograms.jpg')
@@ -37,6 +36,8 @@ str_features = my_pd.get_tab_separated_features(t, x, y, z)
 est_y = classify_sample.classify_ex(clf, str_features)
 class_number = my_pd.get_class_number_from_letter(est_y)
 print(class_number)
+
+
 
 '''
 0 - P - Parado

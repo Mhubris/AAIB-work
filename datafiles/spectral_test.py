@@ -5,7 +5,7 @@ from numpy import abs, linspace, argmax, argsort
 import process_data_AAIB2018 as my_pd
 import novainstrumentation as ni
 
-t, x, y, z = my_pd.get_values_from_csv('be1.csv', path='..\database_final\\')
+t, x, y, z = my_pd.get_values_from_csv('pn1.csv', path='..\database_final\\')
 t, x, y, z = my_pd.remove_duplicates(t, x, y, z)
 t, x, y, z = my_pd.uniform_time(t, x, y, z)
 x, y, z = my_pd.smooth_signal(x, y, z)
