@@ -21,8 +21,8 @@ def get_fit():
     features_matrix = [info.get_line(file_name) for file_name in only_files]
 
     # get data for classifier
-    Y = [i[-2] for i in features_matrix]         # goal class
-    Xtab = [i[0:-3] for i in features_matrix]    # string with features separated by \t
+    Y = [i[-2] for i in features_matrix]        # goal class
+    Xtab = [i[0:-3] for i in features_matrix]   # string with features separated by \t
     X = []                                      # features
     for feature in Xtab:
         X.append(feature.split('\t'))           # features from each sample
