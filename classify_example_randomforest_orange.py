@@ -9,11 +9,8 @@ from os.path import isfile, join
 # -----------------------------------------------------------
 
 
-def get_fit():
-
-    # folder with csv files
-    my_path = 'database_final\\'
-
+def get_fit(my_path='database_final\\'):
+    """ Opens every file in the folder selected by my_path, gets data for classifier and fits classifier"""
     # get all the file names in that folder
     only_files = [f for f in listdir(my_path) if isfile(join(my_path, f))]
 

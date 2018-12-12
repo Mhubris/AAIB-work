@@ -101,8 +101,10 @@ def smooth_signal(x, y, z, window_len=5):
 
 def get_tab_separated_features(t, x, y, z):
     """ Returns string with features separated by tabs. """
-    total_time = t[-1] - t[0]
-    period = total_time / len(t)
+    # t is in milliseconds
+    n = len(t)                      # length of the signal
+    Fs = (n / t[-1]) * pow(10, 3)   # sampling frequency
+    # period = 1.0 / Fs               # sampling interval
 
     # X data
     mu_x = mean(x)
@@ -114,7 +116,7 @@ def get_tab_separated_features(t, x, y, z):
     max_x = max(x)
     min_x = min(x)
     sum_x = sum(x)
-    integral_x = sum_x * period
+    # integral_x = sum_x * period
 
     # Y data
     mu_y = mean(y)
@@ -126,7 +128,7 @@ def get_tab_separated_features(t, x, y, z):
     max_y = max(y)
     min_y = min(y)
     sum_y = sum(y)
-    integral_y = sum_y * period
+    # integral_y = sum_y * period
 
     # Z data
     mu_z = mean(z)
@@ -138,7 +140,7 @@ def get_tab_separated_features(t, x, y, z):
     max_z = max(z)
     min_z = min(z)
     sum_z = sum(z)
-    integral_z = sum_z * period
+    # integral_z = sum_z * period
 
     # data obtained from more than one axis
     corr_xy1, corr_xy2 = pearsonr(x, y)
@@ -147,6 +149,13 @@ def get_tab_separated_features(t, x, y, z):
     count_cross_xz = 0
     count_cross_xy = 0
     count_cross_yz = 0
+    x_up = False
+    count_x_up = 0
+    y_up = False
+    count_y_up = 0
+    z_up = False
+    count_z_up = 0
+    threshold_percent = 0.3
     for i in range(len(x) - 1):
         # cross between X and Z
         if x[i] > z[i] and x[i + 1] < z[i + 1]:
@@ -164,31 +173,44 @@ def get_tab_separated_features(t, x, y, z):
         elif y[i] < z[i] and y[i + 1] > z[i + 1]:
             count_cross_yz += 1
 
-    # spectral domain auxiliary functions to get spectral features from X data
-    x_fft = np.fft.fft(x)
-    x_freqs = np.fft.fftfreq(len(x_fft))
-    x_peak_freq_index = np.argmax(np.abs(x_fft))
-    # spectral domain auxiliary functions to get spectral features from Y data
-    y_fft = np.fft.fft(y)
-    y_freqs = np.fft.fftfreq(len(y_fft))
-    y_peak_freq_index = np.argmax(np.abs(y_fft))
-    # spectral domain auxiliary functions to get spectral features from Z data
-    z_fft = np.fft.fft(z)
-    z_freqs = np.fft.fftfreq(len(z_fft))
-    z_peak_freq_index = np.argmax(np.abs(z_fft))
+        # count number of times x goes above threshold_percent
+        if not x_up and x[i] > mu_x + threshold_percent * mu_x:
+            x_up = True
+            count_x_up += 1
+        if x_up and x[i] < mu_x + threshold_percent * mu_x:
+            x_up = False
 
-    # spectral features from X data
-    x_min_freq = x_freqs.min()
-    x_max_freq = x_freqs.max()
-    x_peak_freq = x_freqs[x_peak_freq_index]  # not in Hertz
-    # spectral features from Y data
-    y_min_freq = y_freqs.min()
-    y_max_freq = y_freqs.max()
-    y_peak_freq = y_freqs[y_peak_freq_index]  # not in Hertz
-    # spectral features from Z data
-    z_min_freq = z_freqs.min()
-    z_max_freq = z_freqs.max()
-    z_peak_freq = z_freqs[z_peak_freq_index]  # not in Hertz
+        # count number of times y goes above threshold_percent
+        if not y_up and y[i] > mu_y + threshold_percent * mu_y:
+            y_up = True
+            count_y_up += 1
+        if y_up and y[i] < mu_y + threshold_percent * mu_y:
+            y_up = False
+
+        # count number of times z goes above threshold_percent
+        if not z_up and x[i] > mu_z + threshold_percent * mu_z:
+            x_up = True
+            count_z_up += 1
+        if z_up and x[i] < mu_z + threshold_percent * mu_z:
+            z_up = False
+
+    # frequency domain features - X
+    fs_x = abs(np.fft.fft(x))
+    f_x = linspace(0, Fs / 2, n / 2)
+    max_f_x = argmax(f_x)
+    max_fs_x = argmax(fs_x)
+
+    # frequency domain features - Y
+    fs_y = abs(np.fft.fft(y))
+    f_y = linspace(0, Fs / 2, n / 2)
+    max_f_y = argmax(f_y)
+    max_fs_y = argmax(fs_y)
+
+    # frequency domain features - Z
+    fs_z = abs(np.fft.fft(z))
+    f_z = linspace(0, Fs / 2, n / 2)
+    max_f_z = argmax(f_z)
+    max_fs_z = argmax(fs_z)
 
     return '\t'.join((
         r'%.2f' % (corr_xy1,),
@@ -206,11 +228,9 @@ def get_tab_separated_features(t, x, y, z):
         r'%.2f' % (vpp_x,),
         r'%.2f' % (max_x,),
         r'%.2f' % (min_x,),
-        r'%.2f' % (integral_x,),
         r'%.2f' % (sum_x,),
-        r'%.2f' % (x_min_freq,),
-        r'%.2f' % (x_max_freq,),
-        r'%.2f' % (x_peak_freq,),
+        r'%.2f' % (max_f_x,),
+        r'%.2f' % (max_fs_x,),
         # Y data features
         r'%.2f' % (mu_y,),
         r'%.2f' % (median_y,),
@@ -220,11 +240,9 @@ def get_tab_separated_features(t, x, y, z):
         r'%.2f' % (vpp_y,),
         r'%.2f' % (max_y,),
         r'%.2f' % (min_y,),
-        r'%.2f' % (integral_y,),
         r'%.2f' % (sum_y,),
-        r'%.2f' % (y_min_freq,),
-        r'%.2f' % (y_max_freq,),
-        r'%.2f' % (y_peak_freq,),
+        r'%.2f' % (max_f_y,),
+        r'%.2f' % (max_fs_y,),
         # Z data features
         r'%.2f' % (mu_z,),
         r'%.2f' % (median_z,),
@@ -234,11 +252,13 @@ def get_tab_separated_features(t, x, y, z):
         r'%.2f' % (vpp_z,),
         r'%.2f' % (max_z,),
         r'%.2f' % (min_z,),
-        r'%.2f' % (integral_z,),
         r'%.2f' % (sum_z,),
-        r'%.2f' % (z_min_freq,),
-        r'%.2f' % (z_max_freq,),
-        r'%.2f' % (z_peak_freq,)
+        r'%.2f' % (max_f_z,),
+        r'%.2f' % (max_fs_z,),
+        # new features
+        r'%.2f' % (count_x_up,),
+        r'%.2f' % (count_y_up,),
+        r'%.2f' % (count_z_up,)
         # target class
         # r'' + str(goal_class) + '\n'
         ))

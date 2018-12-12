@@ -12,7 +12,7 @@ length_inches = 18.0
 width_inches = 5.0
 # -------------------------------------
 
-tt, xx, yy, zz = my_pd.get_values_from_csv('pn1.csv')
+tt, xx, yy, zz = my_pd.get_values_from_csv('bi002.csv')
 
 t, x, y, z = my_pd.remove_duplicates(tt, xx, yy, zz)
 
@@ -21,6 +21,7 @@ uniformTime, newX, newY, newZ = my_pd.uniform_time(t, x, y, z)
 t = uniformTime
 x, y, z = my_pd.smooth_signal(newX, newY, newZ)
 
+# x, y and z signal in time-domain
 my_pd.get_signal_figure(t, x, y, z, newX, newY, newZ, save_fig=True, file_name="plot_signals.jpg")
 
 # x, y and z spectrogram -----------------------------------------------------------------------------------------------

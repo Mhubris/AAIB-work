@@ -4,8 +4,9 @@ import numpy as np
 from numpy import abs, linspace, argmax, argsort
 import process_data_AAIB2018 as my_pd
 import novainstrumentation as ni
+import scipy
 
-t, x, y, z = my_pd.get_values_from_csv('pn1.csv', path='..\database_final\\')
+t, x, y, z = my_pd.get_values_from_csv('be3.csv', path='..\database_final\\')
 t, x, y, z = my_pd.remove_duplicates(t, x, y, z)
 t, x, y, z = my_pd.uniform_time(t, x, y, z)
 x, y, z = my_pd.smooth_signal(x, y, z)
@@ -18,39 +19,21 @@ Ts = 1.0/Fs  # sampling interval
 print("Fs = " + str(Fs))
 print("Ts = " + str(Ts))
 
+
+
+
+'''
 print("x fundamental freq: ")
 fs = abs(np.fft.fft(x))
 f = linspace(0, Fs/2, len(x)/2)
 fig, ax = plt.subplots(1, 1)
-max_f = f[argmax(fs)]
+max_f = max(f)
+max_fs = max(fs)
 print(max_f)
-if max_f == 0:
-    order_coef = argsort(fs)
-    max_f = f[order_coef[1]]
-    print(max_f)
-
-
-print("y fundamental freq: ")
-fs = abs(np.fft.fft(y))
-f = linspace(0, Fs/2, len(x)/2)
-fig, ax = plt.subplots(1, 1)
-max_f = f[argmax(fs)]
-print(max_f)
-if max_f == 0:
-    order_coef = argsort(fs)
-    max_f = f[order_coef[1]]
-    print(max_f)
-
-print("z fundamental freq: ")
-fs = abs(np.fft.fft(z))
-f = linspace(0, Fs/2, len(x)/2)
-fig, ax = plt.subplots(1, 1)
-max_f = f[argmax(fs)]
-print(max_f)
-if max_f == 0:
-    order_coef = argsort(fs)
-    max_f = f[order_coef[1]]
-    print(max_f)
+print(max_fs)
+print(argmax(f))
+print(argmax(fs))
+'''
 
 
 '''
