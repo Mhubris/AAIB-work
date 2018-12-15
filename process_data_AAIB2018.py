@@ -106,48 +106,49 @@ def get_tab_separated_features(t, x, y, z):
     Fs = (n / t[-1]) * pow(10, 3)   # sampling frequency
     # period = 1.0 / Fs               # sampling interval
 
-    # X data
+    # ----- X data
     mu_x = mean(x)
-    median_x = median(x)
+    # median_x = median(x)
     sigma_x = std(x)
     kurtosis_x = kurtosis(x)
     skew_x = skew(x)
-    vpp_x = abs(max(x) - min(x))
+    # vpp_x = abs(max(x) - min(x))
     max_x = max(x)
-    min_x = min(x)
+    # min_x = min(x)
     sum_x = sum(x)
     # integral_x = sum_x * period
 
-    # Y data
+    # ----- Y data
     mu_y = mean(y)
-    median_y = median(y)
+    # median_y = median(y)
     sigma_y = std(y)
-    kurtosis_y = kurtosis(y)
-    skew_y = skew(y)
-    vpp_y = abs(max(y) - min(y))
-    max_y = max(y)
-    min_y = min(y)
+    # kurtosis_y = kurtosis(y)
+    # skew_y = skew(y)
+    # vpp_y = abs(max(y) - min(y))
+    # max_y = max(y)
+    # min_y = min(y)
     sum_y = sum(y)
     # integral_y = sum_y * period
 
-    # Z data
+    # ----- Z data
     mu_z = mean(z)
-    median_z = median(z)
-    sigma_z = std(z)
+    # median_z = median(z)
+    # sigma_z = std(z)
     kurtosis_z = kurtosis(z)
     skew_z = skew(z)
     vpp_z = abs(max(z) - min(z))
-    max_z = max(z)
+    # max_z = max(z)
     min_z = min(z)
     sum_z = sum(z)
     # integral_z = sum_z * period
 
-    # data obtained from more than one axis
+    # ----- data obtained from more than one axis
     corr_xy1, corr_xy2 = pearsonr(x, y)
-    corr_xz1, corr_xz2 = pearsonr(x, z)
+    # corr_xz1, corr_xz2 = pearsonr(x, z)
     corr_yz1, corr_yz2 = pearsonr(y, z)
+
+    '''
     count_cross_xz = 0
-    count_cross_xy = 0
     count_cross_yz = 0
     x_up = False
     count_x_up = 0
@@ -156,17 +157,23 @@ def get_tab_separated_features(t, x, y, z):
     z_up = False
     count_z_up = 0
     threshold_percent = 0.3
+    '''
+    count_cross_xy = 0
     for i in range(len(x) - 1):
-        # cross between X and Z
-        if x[i] > z[i] and x[i + 1] < z[i + 1]:
-            count_cross_xz += 1
-        elif x[i] < z[i] and x[i + 1] > z[i + 1]:
-            count_cross_xz += 1
+
         # cross between X and Y
         if x[i] > y[i] and x[i + 1] < y[i + 1]:
             count_cross_xy += 1
         elif x[i] < y[i] and x[i + 1] > y[i + 1]:
             count_cross_xy += 1
+
+        '''
+        # cross between X and Z
+        if x[i] > z[i] and x[i + 1] < z[i + 1]:
+            count_cross_xz += 1
+        elif x[i] < z[i] and x[i + 1] > z[i + 1]:
+            count_cross_xz += 1
+            
         # cross between Y and Z
         if y[i] > z[i] and y[i + 1] < z[i + 1]:
             count_cross_yz += 1
@@ -193,6 +200,7 @@ def get_tab_separated_features(t, x, y, z):
             count_z_up += 1
         if z_up and x[i] < mu_z + threshold_percent * mu_z:
             z_up = False
+        '''
 
     # frequency domain features - X
     fs_x = abs(np.fft.fft(x))
@@ -214,51 +222,51 @@ def get_tab_separated_features(t, x, y, z):
 
     return '\t'.join((
         r'%.2f' % (corr_xy1,),
-        r'%.2f' % (corr_xz1,),
+        # r'%.2f' % (corr_xz1,),
         r'%.2f' % (corr_yz1,),
-        r'%.2f' % (count_cross_xz,),
+        # r'%.2f' % (count_cross_xz,),
         r'%.2f' % (count_cross_xy,),
-        r'%.2f' % (count_cross_yz,),
-        # X data features
+        # r'%.2f' % (count_cross_yz,),
+        # ----- X data features
         r'%.2f' % (mu_x,),
-        r'%.2f' % (median_x,),
+        # r'%.2f' % (median_x,),
         r'%.2f' % (sigma_x,),
         r'%.2f' % (kurtosis_x,),
         r'%.2f' % (skew_x,),
-        r'%.2f' % (vpp_x,),
+        # r'%.2f' % (vpp_x,),
         r'%.2f' % (max_x,),
-        r'%.2f' % (min_x,),
+        # r'%.2f' % (min_x,),
         r'%.2f' % (sum_x,),
         r'%.2f' % (max_f_x,),
         r'%.2f' % (max_fs_x,),
-        # Y data features
-        r'%.2f' % (mu_y,),
-        r'%.2f' % (median_y,),
+        # ----- Y data features
+        # r'%.2f' % (mu_y,),
+        # r'%.2f' % (median_y,),
         r'%.2f' % (sigma_y,),
-        r'%.2f' % (kurtosis_y,),
-        r'%.2f' % (skew_y,),
-        r'%.2f' % (vpp_y,),
-        r'%.2f' % (max_y,),
-        r'%.2f' % (min_y,),
+        # r'%.2f' % (kurtosis_y,),
+        # r'%.2f' % (skew_y,),
+        # r'%.2f' % (vpp_y,),
+        # r'%.2f' % (max_y,),
+        # r'%.2f' % (min_y,),
         r'%.2f' % (sum_y,),
         r'%.2f' % (max_f_y,),
         r'%.2f' % (max_fs_y,),
-        # Z data features
-        r'%.2f' % (mu_z,),
-        r'%.2f' % (median_z,),
-        r'%.2f' % (sigma_z,),
+        # ----- Z data features
+        # r'%.2f' % (mu_z,),
+        # r'%.2f' % (median_z,),
+        # r'%.2f' % (sigma_z,),
         r'%.2f' % (kurtosis_z,),
         r'%.2f' % (skew_z,),
         r'%.2f' % (vpp_z,),
-        r'%.2f' % (max_z,),
+        # r'%.2f' % (max_z,),
         r'%.2f' % (min_z,),
         r'%.2f' % (sum_z,),
         r'%.2f' % (max_f_z,),
         r'%.2f' % (max_fs_z,),
-        # new features
-        r'%.2f' % (count_x_up,),
-        r'%.2f' % (count_y_up,),
-        r'%.2f' % (count_z_up,)
+        # ----- new features
+        # r'%.2f' % (count_x_up,),
+        # r'%.2f' % (count_y_up,),
+        # r'%.2f' % (count_z_up,)
         # target class
         # r'' + str(goal_class) + '\n'
         ))

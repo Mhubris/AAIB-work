@@ -34,52 +34,52 @@ def get_line(file_name):
 def get_first_line():
     return '\t'.join((
         r'corr_xy1',
-        r'corr_xz1',
+        # r'corr_xz1',
         r'corr_yz1',
-        r'count_cross_xz',
+        # r'count_cross_xz',
         r'count_cross_xy',
-        r'count_cross_yz',
-        # X data features
+        # r'count_cross_yz',
+        # ----- X data features
         r'mu_x',
-        r'median_x',
+        # r'median_x',
         r'sigma_x',
         r'kurtosis_x',
         r'skew_x',
-        r'vpp_x',
+        # r'vpp_x',
         r'max_x',
-        r'min_x',
+        # r'min_x',
         r'sum_x',
         r'max_f_x',
         r'max_fs_x',
-        # Y data features
-        r'mu_y',
-        r'median_y',
+        # ----- Y data features
+        # r'mu_y',
+        # r'median_y',
         r'sigma_y',
-        r'kurtosis_y',
-        r'skew_y',
-        r'vpp_y',
-        r'max_y',
-        r'min_y',
+        # r'kurtosis_y',
+        # r'skew_y',
+        # r'vpp_y',
+        # r'max_y',
+        # r'min_y',
         r'sum_y',
         r'max_f_y',
         r'max_fs_y',
-        # Z data features
-        r'mu_z',
-        r'median_z',
-        r'sigma_z',
+        # ----- Z data features
+        # r'mu_z',
+        # r'median_z',
+        # r'sigma_z',
         r'kurtosis_z',
         r'skew_z',
         r'vpp_z',
-        r'max_z',
+        # r'max_z',
         r'min_z',
         r'sum_z',
         r'max_f_z',
         r'max_fs_z',
-        # new features
-        r'count_x_up',
-        r'count_y_up',
-        r'count_z_up',
-        # target class
+        # ----- new features
+        # r'count_x_up',
+        # r'count_y_up',
+        # r'count_z_up',
+        # ----- target class
         r'goalClass' + '\n'
         ))
 

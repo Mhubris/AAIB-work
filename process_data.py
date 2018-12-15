@@ -12,7 +12,7 @@ length_inches = 18.0
 width_inches = 5.0
 # -------------------------------------
 
-tt, xx, yy, zz = my_pd.get_values_from_csv('bi002.csv')
+tt, xx, yy, zz = my_pd.get_values_from_csv('bt002.csv')
 
 t, x, y, z = my_pd.remove_duplicates(tt, xx, yy, zz)
 
@@ -20,6 +20,14 @@ uniformTime, newX, newY, newZ = my_pd.uniform_time(t, x, y, z)
 
 t = uniformTime
 x, y, z = my_pd.smooth_signal(newX, newY, newZ)
+
+t = t[10:-10]
+x = x[10:-10]
+y = y[10:-10]
+z = z[10:-10]
+newX = newX[10:-10]
+newY = newY[10:-10]
+newZ = newZ[10:-10]
 
 # x, y and z signal in time-domain
 my_pd.get_signal_figure(t, x, y, z, newX, newY, newZ, save_fig=True, file_name="plot_signals.jpg")

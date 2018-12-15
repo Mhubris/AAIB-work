@@ -28,4 +28,3 @@ for line in featuresmatrix:
 f.close()
 
 print(len(featuresmatrix))
-
