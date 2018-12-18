@@ -12,7 +12,7 @@ length_inches = 18.0
 width_inches = 5.0
 # -------------------------------------
 
-tt, xx, yy, zz = my_pd.get_values_from_csv('bt002.csv')
+tt, xx, yy, zz = my_pd.get_values_from_csv('teste.csv', path="")
 
 t, x, y, z = my_pd.remove_duplicates(tt, xx, yy, zz)
 

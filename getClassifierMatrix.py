@@ -4,7 +4,7 @@ from os import listdir
 from os.path import isfile, join
 
 # folder with csv files
-mypath = 'database_final\\'
+mypath = 'database_uniform24\\'
 
 # get all the file names in that folder
 onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]

@@ -13,7 +13,7 @@ import novainstrumentation as ni
 # import classify_example_randomforest_orange as classify_sample
 
 
-def get_values_from_csv(file_name, path='database_final\\'):
+def get_values_from_csv(file_name, path='database_uniform24\\'):
     """ Extracts the time vector, and accelerations in x, y, and z
         from a csv file obtained using phone accelerometers.
         Returns tt, xx, yy, zz. """
