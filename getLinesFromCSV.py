@@ -22,11 +22,10 @@ def get_line(file_name):
 
     uniform_time, new_x, new_y, new_z = my_pd.uniform_time(t, x, y, z)
     t = uniform_time
-    x, y, z = my_pd.smooth_signal(new_x, new_y, new_z)
+    x, y, z = my_pd.smooth_signal(new_x, new_y, new_z , window_len=4)
 
     # get features
     features = my_pd.get_tab_separated_features(t, x, y, z)
-
     # return features and target class (separated by tabs)
     return '\t'.join((features, str(goal_class) + '\n'))
 

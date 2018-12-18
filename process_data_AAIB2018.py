@@ -13,7 +13,7 @@ import novainstrumentation as ni
 # import classify_example_randomforest_orange as classify_sample
 
 
-def get_values_from_csv(file_name, path='database_uniform24\\'):
+def get_values_from_csv(file_name, path='database_uniform24//'):
     """ Extracts the time vector, and accelerations in x, y, and z
         from a csv file obtained using phone accelerometers.
         Returns tt, xx, yy, zz. """
@@ -25,14 +25,11 @@ def get_values_from_csv(file_name, path='database_uniform24\\'):
     tt = [float(i[0].replace(',', '.')) for i in data]
 
     # get X acceleration (replace comma with dot for numeric parsing)
-    xx = [float(i[1].replace(',', '.')) for i in data]
-
+    xx = [int(round(float(i[1].replace(',', '.'))*100)) for i in data]
     # get Y acceleration (replace comma with dot for numeric parsing)
-    yy = [float(i[2].replace(',', '.')) for i in data]
-
+    yy = [int(round(float(i[2].replace(',', '.'))*100)) for i in data]
     # get Z acceleration (replace comma with dot for numeric parsing)
-    zz = [float(i[3].replace(',', '.')) for i in data]
-
+    zz = [int(round(float(i[3].replace(',', '.'))*100)) for i in data]
     return tt, xx, yy, zz
 
 
@@ -105,6 +102,14 @@ def get_tab_separated_features(t, x, y, z):
     n = len(t)                      # length of the signal
     Fs = (n / t[-1]) * pow(10, 3)   # sampling frequency
     # period = 1.0 / Fs               # sampling interval
+
+
+    #------- New_Features
+    abs_mean_x = sum(abs(x)) / n
+    abs_mean_y = sum(abs(y)) / n
+    abs_mean_z = sum(abs(z)) / n
+
+
 
     # ----- X data
     mu_x = mean(x)
