@@ -1,5 +1,5 @@
 import matplotlib
-matplotlib.use('Agg')
+#matplotlib.use('Agg')
 from pylab import *
 import matplotlib.pyplot as plt
 import classify_example_randomforest_orange as classify_sample
@@ -9,6 +9,8 @@ from joblib import dump, load
 # fit classifier
 #clf = load('teste.joblib')
 clf= classify_sample.get_fit()
+classify_sample.get_confusion_matrix(clf)
+
 # -------------------------------------
 length_inches = 18.0
 width_inches = 5.0

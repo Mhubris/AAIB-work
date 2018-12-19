@@ -13,7 +13,7 @@ import novainstrumentation as ni
 # import classify_example_randomforest_orange as classify_sample
 
 
-def get_values_from_csv(file_name, path='database_uniform24//'):
+def get_values_from_csv(file_name, path='19_12_db//'):
     """ Extracts the time vector, and accelerations in x, y, and z
         from a csv file obtained using phone accelerometers.
         Returns tt, xx, yy, zz. """
@@ -99,57 +99,70 @@ def smooth_signal(x, y, z, window_len=5):
 def get_tab_separated_features(t, x, y, z):
     """ Returns string with features separated by tabs. """
     # t is in milliseconds
-    n = len(t)                      # length of the signal
-    Fs = (n / t[-1]) * pow(10, 3)   # sampling frequency
+    n = len(t)  # length of the signal
+    Fs = (n / t[-1]) * pow(10, 3)  # sampling frequency
     # period = 1.0 / Fs               # sampling interval
 
-
-    #------- New_Features
+    # ------- New_Features
     abs_mean_x = sum(abs(x)) / n
     abs_mean_y = sum(abs(y)) / n
     abs_mean_z = sum(abs(z)) / n
 
+    signal_power_x = sum(log(x ** 2))
+    signal_power_y = sum(log(y ** 2))
+    signal_power_z = sum(log(z ** 2))
 
+    complexity_x = 0
+    complexity_y = 0
+    complexity_z = 0
+
+    spectral_centroid_x = 0
+    spectral_centroid_y = 0
+    spectral_centroid_z = 0
+
+    spectral_entropy_x = -sum((x ** 2 / sum(x ** 2)) * log((x ** 2 / sum(x ** 2))))
+    spectral_entropy_y = -sum((y ** 2 / sum(y ** 2)) * log((y ** 2 / sum(y ** 2))))
+    spectral_entropy_z = -sum((z ** 2 / sum(z ** 2)) * log((z ** 2 / sum(z ** 2))))
 
     # ----- X data
     mu_x = mean(x)
-    # median_x = median(x)
+    median_x = median(x)
     sigma_x = std(x)
     kurtosis_x = kurtosis(x)
     skew_x = skew(x)
-    # vpp_x = abs(max(x) - min(x))
+    vpp_x = abs(max(x) - min(x))
     max_x = max(x)
-    # min_x = min(x)
+    min_x = min(x)
     sum_x = sum(x)
     # integral_x = sum_x * period
 
     # ----- Y data
     mu_y = mean(y)
-    # median_y = median(y)
+    median_y = median(y)
     sigma_y = std(y)
-    # kurtosis_y = kurtosis(y)
-    # skew_y = skew(y)
-    # vpp_y = abs(max(y) - min(y))
-    # max_y = max(y)
-    # min_y = min(y)
+    kurtosis_y = kurtosis(y)
+    skew_y = skew(y)
+    vpp_y = abs(max(y) - min(y))
+    max_y = max(y)
+    min_y = min(y)
     sum_y = sum(y)
     # integral_y = sum_y * period
 
     # ----- Z data
     mu_z = mean(z)
-    # median_z = median(z)
-    # sigma_z = std(z)
+    median_z = median(z)
+    sigma_z = std(z)
     kurtosis_z = kurtosis(z)
     skew_z = skew(z)
     vpp_z = abs(max(z) - min(z))
-    # max_z = max(z)
+    max_z = max(z)
     min_z = min(z)
     sum_z = sum(z)
     # integral_z = sum_z * period
 
     # ----- data obtained from more than one axis
     corr_xy1, corr_xy2 = pearsonr(x, y)
-    # corr_xz1, corr_xz2 = pearsonr(x, z)
+    corr_xz1, corr_xz2 = pearsonr(x, z)
     corr_yz1, corr_yz2 = pearsonr(y, z)
 
     '''
@@ -164,6 +177,8 @@ def get_tab_separated_features(t, x, y, z):
     threshold_percent = 0.3
     '''
     count_cross_xy = 0
+
+    # Features that need for loop
     for i in range(len(x) - 1):
 
         # cross between X and Y
@@ -172,13 +187,21 @@ def get_tab_separated_features(t, x, y, z):
         elif x[i] < y[i] and x[i + 1] > y[i + 1]:
             count_cross_xy += 1
 
+        complexity_x += abs(x[i + 1] - x[i])
+        complexity_y += abs(y[i + 1] - y[i])
+        complexity_z += abs(z[i + 1] - z[i])
+
+        spectral_centroid_x += (x[i] * i)
+        spectral_centroid_y += (y[i] * i)
+        spectral_centroid_z += (z[i] * i)
+
         '''
         # cross between X and Z
         if x[i] > z[i] and x[i + 1] < z[i + 1]:
             count_cross_xz += 1
         elif x[i] < z[i] and x[i + 1] > z[i + 1]:
             count_cross_xz += 1
-            
+
         # cross between Y and Z
         if y[i] > z[i] and y[i + 1] < z[i + 1]:
             count_cross_yz += 1
@@ -206,6 +229,9 @@ def get_tab_separated_features(t, x, y, z):
         if z_up and x[i] < mu_z + threshold_percent * mu_z:
             z_up = False
         '''
+    spectral_centroid_x = spectral_centroid_x / sum_x
+    spectral_centroid_y = spectral_centroid_y / sum_y
+    spectral_centroid_z = spectral_centroid_z / sum_z
 
     # frequency domain features - X
     fs_x = abs(np.fft.fft(x))
@@ -226,6 +252,21 @@ def get_tab_separated_features(t, x, y, z):
     max_fs_z = argmax(fs_z)
 
     return '\t'.join((
+        r'%.2f' % (abs_mean_x,),
+        r'%.2f' % (abs_mean_y,),
+        r'%.2f' % (abs_mean_z,),
+        r'%.2f' % (complexity_x,),
+        r'%.2f' % (complexity_y,),
+        r'%.2f' % (complexity_z,),
+        r'%.2f' % (signal_power_x,),
+        r'%.2f' % (signal_power_y,),
+        r'%.2f' % (signal_power_z,),
+        r'%.2f' % (spectral_entropy_x,),
+        r'%.2f' % (spectral_entropy_y,),
+        r'%.2f' % (spectral_entropy_z,),
+        #r'%.2f' % (spectral_centroid_x,),
+        #r'%.2f' % (spectral_centroid_y,),
+        #r'%.2f' % (spectral_centroid_z,),
         r'%.2f' % (corr_xy1,),
         # r'%.2f' % (corr_xz1,),
         r'%.2f' % (corr_yz1,),
@@ -237,12 +278,12 @@ def get_tab_separated_features(t, x, y, z):
         # r'%.2f' % (median_x,),
         r'%.2f' % (sigma_x,),
         r'%.2f' % (kurtosis_x,),
-        r'%.2f' % (skew_x,),
+        # r'%.2f' % (skew_x,),
         # r'%.2f' % (vpp_x,),
         r'%.2f' % (max_x,),
         # r'%.2f' % (min_x,),
         r'%.2f' % (sum_x,),
-        r'%.2f' % (max_f_x,),
+        #r'%.2f' % (max_f_x,),
         r'%.2f' % (max_fs_x,),
         # ----- Y data features
         # r'%.2f' % (mu_y,),
@@ -254,19 +295,19 @@ def get_tab_separated_features(t, x, y, z):
         # r'%.2f' % (max_y,),
         # r'%.2f' % (min_y,),
         r'%.2f' % (sum_y,),
-        r'%.2f' % (max_f_y,),
+        #r'%.2f' % (max_f_y,),
         r'%.2f' % (max_fs_y,),
         # ----- Z data features
         # r'%.2f' % (mu_z,),
         # r'%.2f' % (median_z,),
         # r'%.2f' % (sigma_z,),
-        r'%.2f' % (kurtosis_z,),
-        r'%.2f' % (skew_z,),
+        # r'%.2f' % (kurtosis_z,),
+        # r'%.2f' % (skew_z,),
         r'%.2f' % (vpp_z,),
         # r'%.2f' % (max_z,),
         r'%.2f' % (min_z,),
         r'%.2f' % (sum_z,),
-        r'%.2f' % (max_f_z,),
+        #r'%.2f' % (max_f_z,),
         r'%.2f' % (max_fs_z,),
         # ----- new features
         # r'%.2f' % (count_x_up,),
@@ -274,7 +315,7 @@ def get_tab_separated_features(t, x, y, z):
         # r'%.2f' % (count_z_up,)
         # target class
         # r'' + str(goal_class) + '\n'
-        ))
+    ))
 
 
 def get_class_number_from_letter(est_y):

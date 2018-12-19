@@ -1,5 +1,8 @@
 from scipy import *
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.cross_validation import train_test_split
+from sklearn import metrics
+from sklearn.metrics import confusion_matrix
 
 import getLinesFromCSV as info
 
@@ -10,8 +13,29 @@ from joblib import dump, load
 # -----------------------------------------------------------
 
 
-def get_fit(my_path='database_uniform24//'):
-    """ Opens every file in the folder selected by my_path, gets data for classifier and fits classifier"""
+def get_fit(my_path='19_12_db//'):
+
+    X,Y=get_x_y(my_path)
+
+    # best option according to Orange
+    clf = RandomForestClassifier(
+        max_depth=4,
+        n_estimators=60,
+        max_features=7,
+        min_samples_leaf=5)
+
+    clf.fit(X, Y)
+    return clf
+
+
+def classify_ex(clf, xx):
+    x = []
+    x.append(xx[0:-3].split('\t'))
+    return clf.predict(x)
+
+
+def get_x_y (my_path='19_12_db//'):
+    """ Opens every file in the folder selected by my_path, gets data for classifier"""
     # get all the file names in that folder
     only_files = [f for f in listdir(my_path) if isfile(join(my_path, f))]
 
@@ -25,22 +49,20 @@ def get_fit(my_path='database_uniform24//'):
     for feature in Xtab:
         X.append(feature.split('\t'))           # features from each sample
 
-    # best option according to Orange
-    clf = RandomForestClassifier(
-        max_depth=4,
-        n_estimators=12,
-        max_features=9)
-
-    clf.fit(X, Y)
-    #dump(clf, 'teste.joblib')
-
-    return clf
+    return X,Y
 
 
-def classify_ex(clf, xx):
-    x = []
-    x.append(xx[0:-3].split('\t'))
-    return clf.predict(x)
+def get_confusion_matrix(clf,my_path='19_12_db//'):
+    X,Y=get_x_y(my_path)
+    # Split the datset into training and testing dataset
+    x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=.25)
+    # Test the just trained classifier
+    predictions = clf.predict(x_test)
+    # Print the confusion matrix
+    print(confusion_matrix(y_test, predictions))
+    # Print the accuracy
+    print("Accuracy: " + str(metrics.accuracy_score(y_test, predictions)))
+
 
 
 def how_certain(clf1, x):
