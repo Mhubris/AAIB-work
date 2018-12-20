@@ -451,7 +451,6 @@ def get_histograms_figure(t, x, y, z,
 
 def get_signal_figure(t, x, y, z, newX, newY, newZ,
                             length_inches=18.0, width_inches=5.0,
-                            nfft=8, noverlap=4,
                             save_fig=True, file_name='signal.jpg',
                             rpi=False, rpi_filepath='//home/pi//Desktop//AAIB_Project//'):
     """ Returns image in base64 (for Raspberry Pi), if and only if save_fig=True, or figure if rpi=False """

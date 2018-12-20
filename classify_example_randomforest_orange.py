@@ -14,17 +14,25 @@ from joblib import dump, load
 
 
 def get_fit(my_path='19_12_db//'):
+    """
+    :param my_path: path to the database files
+    :return: trained classifier (Random Forest with max_depth=4, n_estimators=60, max_features=7, min_samples_leaf=5)
+    """
 
-    X,Y=get_x_y(my_path)
+    # get features (X) from the files in the database, and respective target classes (Y), from the "my_path" directory
+    X, Y = get_x_y(my_path)
 
-    # best option according to Orange
+    # best option for the classifier according to Orange
     clf = RandomForestClassifier(
         max_depth=4,
         n_estimators=60,
         max_features=7,
         min_samples_leaf=5)
 
+    # fit the classifier (adjust the classifier model to the samples in our database)
     clf.fit(X, Y)
+
+    # return the trained classifier
     return clf
 
 
