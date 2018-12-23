@@ -97,11 +97,14 @@ def smooth_signal(x, y, z, window_len=5):
 
 
 def get_tab_separated_features(t, x, y, z):
-    """ Returns string with features separated by tabs. """
+    """ Returns string with features separated by tabs.
+        The resulting string must have the features
+        in the same order as defined in the function get_first_line() from getLinesFromCSV.py """
+
     # t is in milliseconds
     n = len(t)  # length of the signal
     Fs = (n / t[-1]) * pow(10, 3)  # sampling frequency
-    # period = 1.0 / Fs               # sampling interval
+    # period = 1.0 / Fs            # sampling interval
 
     # ------- New_Features
     abs_mean_x = sum(abs(x)) / n
