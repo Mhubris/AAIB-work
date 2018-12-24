@@ -1,17 +1,17 @@
 # Trabalho de AAIB
 ### Autores:
-+ Bernardo Teixeira
-+ Miguel Andrade
-+ Sara Lobo
++ Bernardo Teixeira, 45021 MIEB
++ Miguel Andrade, 44979 MIEB
++ Sara Lobo, 45622 MIEB
 
 ### Resumo:
-Este trabalho consiste na implementação de um classificador cuja a finalidade é informar os médicos se determinado paciente necessita de cadeira elétrica ou automática, com base nos valores de aceleração do telefone. De forma a enriquecer o nosso trabalho identificaram-se sete labels, incluindo as anteriores, que são as seguintes:
-1. Cadeira Manual
-2. Cadeira Elétrica
-3. Foi Empurrado
-4. Teste Inválido
-5. Parado
-6. Telemóvel não colocado no suporte
+Este trabalho consiste na implementação de um classificador, cuja a finalidade é informar os médicos se determinado paciente necessita de cadeira de rodas elétrica ou é capaz de utilizar corretamente uma cadeira de rodas manual. Para tal são aquiridos dados de aceleração (em três direções ortogonais - *x*, *y* e *z*) através dos acelerómetros de um *smartphone*. Foi ainda desenvolvido um suporte para que o *smartphone* se encontre sempre na mesma posição em todas as aquisições. De forma a enriquecer o nosso trabalho, identificaram-se seis *target classes*, incluindo as anteriores, que são as seguintes:
+1. Cadeira Manual (*class* S)
+2. Cadeira Elétrica (*class* N)
+3. Foi Empurrado (*class* E)
+4. Teste Inválido (*class* I)
+5. Parado (*class* P)
+6. Telemóvel não colocado no suporte (*class* X)
 
 Para uma melhor compreensão da estrutura deste repositório e das funcionalidades associadas a cada ficheiro deve ser lido o relatório disponível em ....
 
