@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+    Customize this policy to fit your own app's needs. For more guidance, see:
+    https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+    Some notes:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+    * Enable inline JS: add 'unsafe-inline' to default-src
+-->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+<meta name="format-detection" content="telephone=no">
+<meta name="msapplication-tap-highlight" content="no">
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+<link rel="stylesheet" type="text/css" href="css/vendor/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/vendor/animate.css">
+<link rel="stylesheet" type="text/css" href="css/maketest.css">
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<title>Hello World</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="index.html">AAIB</a>
+        <button class="navbar-toggler d-none" type="button" id="record_icon">
+            <img src="img/images/record.png" id="record_button">
+        </button>
+    </nav>
+
+     <div class="container">
+     	<div class="row d-flex justify-content-center">
+            <!--Executed during the test-->
+              <img src='img/images/checked.png' class="d-none">
+              <h1>3</h1>
+     	      <div class = "centered d-none">
+     	            <div class = "blob-1"></div>
+     	            <div class = "blob-2"></div>
+              </div>
+              <div class="row" id="chart_row">
+                  <div class="col-sm-12">
+                        <div id="chart"></div>
+                  </div>
+              </div>
+              <h2 >A Executar Teste</h2>
+              <div class="d-none position-absolute button w-100">
+                  <div class="col-sm-12 d-flex justify-content-center">
+                      <a class="style-button btn btn-primary w-100" id="see_results" href="seeresults.html">Ver Resultados</a>
+                  </div>
+                  <div class="col-sm-12 d-flex justify-content-center mt-3">
+                      <a class="style-button btn btn-primary w-100" id="save_as_pdf">Exportar para CSV</a>
+                  </div>
+              </div>
+     	</div>
+
+     </div>
+
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/vendor/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/vendor/plotly.min.js"></script>
+    <script type="text/javascript" src="js/accelerometer.js"></script>
+</body>
+</html>

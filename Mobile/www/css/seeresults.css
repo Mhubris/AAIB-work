@@ -1,0 +1,17 @@
+body, html {
+    height: 100% !important;
+    position: relative;
+}
+
+
+body{
+    background-image: url('../img/images/background.png');
+    background-position: center;
+    background-size: cover;
+}
+
+#result{
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 0.25rem;
+}
