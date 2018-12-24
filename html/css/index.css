@@ -1,0 +1,44 @@
+html, body {
+    overflow: auto;
+}
+
+body{
+    background-image: url('../src/background-clean.jpg');
+}
+
+.container{
+    height: 100% ;
+
+}
+form > input
+{
+    display: none;
+}
+
+.row, .w-100{
+    background-color: rgba(204, 204, 204, 0.8);
+    border-radius: 2px;
+    margin: 1rem;
+    position: relative;
+}
+
+.row > .col-sm-4{
+    background-position: center;
+    background-size: cover;
+}
+
+.row, .w-100 {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.row:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+a {
+  text-decoration: none; /* no underline */
+}
+a:hover{
+    text-decoration: none;
+}
