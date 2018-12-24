@@ -1,0 +1,21 @@
+.style-button{
+    padding-left: 60px;
+    padding-right:60px;
+    margin-top: 60px;
+}
+
+.home-image{
+    margin-top: 60px;
+}
+
+body, html {
+    height: 100% !important;
+    position: relative;
+}
+
+
+body{
+    background-image: url('../img/images/background.png');
+    background-position: center;
+    background-size: cover;
+}
