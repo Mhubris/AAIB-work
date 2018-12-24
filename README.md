@@ -11,8 +11,7 @@ Este trabalho consiste na implementação de um classificador cuja a finalidade 
 3. Cadeira Elétrica
 4. Cadeira Manual
 5. Foi Empurrado
-6. Andou para trás
-7. Telemóvel não colocado no suporte
+6. Telemóvel não colocado no suporte
 
 ### Instalação da aplicação
 A aplicação foi desenvolvida em Cordova e a sua pasta é 'Mobile'. De forma a instalar a mesma no seu telemóvel deve instalar o Node.js e de seguida o Cordova, através do comando:
